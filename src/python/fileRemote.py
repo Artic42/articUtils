@@ -1,5 +1,9 @@
+from articutils.fileRemote import config
+
 def main():
-    pass
+    conf = config.Config()
+
+    print(conf)
 
 
 if __name__ == "__main__":
