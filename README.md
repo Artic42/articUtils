@@ -27,3 +27,4 @@ List of commands builtin commands
 | File | Command description |
 | --- | --- |
 | REBOOT | Reboots the system |
+| UPDATE | Update config from reading file |
