@@ -1,5 +1,6 @@
 from articutils.fileRemote import config
 
+
 def main():
     conf = config.Config()
 
