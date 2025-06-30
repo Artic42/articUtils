@@ -14,17 +14,14 @@ class Config:
             cls._instance._init(path = path)
         return cls._instance
 
-    def __del__(self):
-        print("Destroy instance")
-        self._instance = None
-
     def _init(self, path : str = CONFIG_PATH) -> None:
+        self.warnings = []
         if FU.fileExists(path):
             FP = open(path, 'r')
             self.config = yaml.safe_load(FP)
         else:
-            print(f"WARNING: File {path} doesn't exist")
             self.config = {}
+            self.warnings.append({"code":1, "msg":"Init not ok due to no config file"})
         self._set_defaults()
 
     def _set_defaults(self):
@@ -36,7 +33,7 @@ class Config:
     def refresh_rate(self) -> int:
         return int(self.config["refreshRate"])
 
-    def monitoring_path(self) -> int:
+    def monitoring_path(self) -> str:
         return self.config["monPath"]
 
     def update_config(self, path : str = CONFIG_PATH) -> None:
@@ -46,3 +43,12 @@ class Config:
         for key in newConfig:
             self.config[key] = newConfig[key]
 
+    def read_warnings(self) -> list[str]:
+        readWarnings = self.warnings
+        self.warnings = []
+        return readWarnings
+
+    def save_config(self, path : str = CONFIG_PATH) -> None:
+        FP = open(path, 'w')
+        yaml.dump(self.config, FP)
+        FP.close()
