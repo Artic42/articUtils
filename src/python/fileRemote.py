@@ -1,12 +1,20 @@
+import time
 from articutils.fileRemote import config
+from articutils.fileRemote import sys_command
+from articlib.articFileUtils import fileExists
+from articlib.articFileUtils import deleteFile
 
 
-def main():
+def loop():
     conf = config.Config()
+    while not fileExists(conf.monitoring_path() + "/KILL"): 
+        monitor()
+        time.sleep(conf.refresh_rate() / 1000)
+    deleteFile(conf.monitoring_path() + "/KILL")
 
-    print(conf)
-
+def monitor():
+    sys_command.monitor()
 
 if __name__ == "__main__":
-    main()
+    loop()
 

@@ -1,2 +1,2 @@
-refreshRate: 100
-monPath: /var/temp/fileRemote
+refreshRate: 10
+monPath: /tmp/fileRemote

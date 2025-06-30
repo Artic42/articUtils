@@ -11,7 +11,7 @@ class Config:
     def __new__(cls, path : str = CONFIG_PATH):
         if cls._instance is None:
             cls._instance = super().__new__(cls)
-            cls._instance._init(path = path)
+        cls._instance._init(path = path)
         return cls._instance
 
     def _init(self, path : str = CONFIG_PATH) -> None:
@@ -23,13 +23,14 @@ class Config:
             self.config = {}
             self.warnings.append({"code":1, "msg":"Init not ok due to no config file"})
         self._set_defaults()
+        FU.createDirectory(self.monitoring_path())
 
     def _set_defaults(self):
         if "refreshRate" not in self.config:
             self.config["refreshRate"] = 1000
         if "monPath" not in self.config:
             self.config["monPath"] = "~/.fileRemote"
-    
+
     def refresh_rate(self) -> int:
         return int(self.config["refreshRate"])
 
