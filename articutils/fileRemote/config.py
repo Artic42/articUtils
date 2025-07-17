@@ -49,7 +49,7 @@ class Config:
         self.warnings = []
         return readWarnings
 
-    def save_config(self, path : str = CONFIG_PATH) -> None:
+    def save_config(self, path: str = CONFIG_PATH) -> None:
         FP = open(path, 'w')
         yaml.dump(self.config, FP)
         FP.close()
