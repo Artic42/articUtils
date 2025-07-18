@@ -1,0 +1,13 @@
+[flake8]
+extend-ignore = E203
+exclude =
+    _pycache_,
+    .git,
+    .venv,
+    .pytest_cache
+max-complexity = 10
+ignore =
+    E731
+statistics = True
+count = True
+max-line-length = 100

@@ -8,6 +8,7 @@ conf = config.Config()
 REBOOT_FILE_PATH = conf.monitoring_path() + "/REBOOT"
 UPDATE_FILE_PATH = conf.monitoring_path() + "/UPDATE"
 
+
 def monitor():
     if fileExists(REBOOT_FILE_PATH):
         deleteFile(REBOOT_FILE_PATH)

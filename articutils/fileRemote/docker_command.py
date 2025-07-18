@@ -36,14 +36,14 @@ def downContainer():
 
 
 def buildImage():
-    FP = open(CREATE_FILE_PATH, 'r')
+    FP = open(CREATE_FILE_PATH, "r")
     lines = FP.readlines()
     imageName = lines[0][2:]
     os.system(f"docker build -t {imageName} {CREATE_FILE_PATH}")
 
 
 def removeImage():
-    FP = open(REMOVE_FILE_PATH, 'r')
+    FP = open(REMOVE_FILE_PATH, "r")
     lines = FP.readlines()
     imageName = lines[0]
     os.system(f"docker rmi {imageName}")
