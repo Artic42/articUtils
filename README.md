@@ -39,3 +39,17 @@ List of commands builtin docker module
 | DOWN_DOCKER_CONTAINER | Put down a docker container with coker compose |
 | CREATE_DOCKER_CONTAINER | Create a docker image using the file as a dockerfile |
 | REMOVE_DOCKER_CONTAINER | Remove a docker image from the system |
+
+### systemStatus
+
+This application will save a series of status variables on a yaml file to be read by other software. There will be a option to point to a MongoDB database where the info will be stored. Two refresh rate can be configured for slow and fast data.
+
+### Slow data 
+- System docker images
+- Running containers and status
+
+#### Fast data
+- RAM usages
+- CPU usage
+- Temperature
+
