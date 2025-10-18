@@ -28,3 +28,14 @@ List of commands builtin commands
 | --- | --- |
 | REBOOT | Reboots the system |
 | UPDATE | Update config from reading file |
+
+#### docker
+
+List of commands builtin docker module
+
+| File | Command description |
+| --- | --- |
+| UP_DOCKER_CONTAINER| Put up a docker container with docker compose |
+| DOWN_DOCKER_CONTAINER | Put down a docker container with coker compose |
+| CREATE_DOCKER_CONTAINER | Create a docker image using the file as a dockerfile |
+| REMOVE_DOCKER_CONTAINER | Remove a docker image from the system |
