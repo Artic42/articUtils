@@ -18,6 +18,7 @@ black = "^25.1.0"
 mypy = "^1.16.1"
 cx-freeze = "^8.3.0"
 pytest = "^8.4.1"
+types-pyyaml = "^6.0.12.20250915"
 
 [build-system]
 requires = ["poetry-core"]

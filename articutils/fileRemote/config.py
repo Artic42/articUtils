@@ -50,7 +50,7 @@ class Config:
         for key in newConfig:
             self.config[key] = newConfig[key]
 
-    def read_warnings(self) -> list[str]:
+    def read_warnings(self) -> list[dict[str, object]]:
         readWarnings = self.warnings
         self.warnings = []
         return readWarnings
