@@ -32,10 +32,35 @@ class Config:
         FU.createDirectory(self.report_path())
 
     def _set_defaults(self) -> None:
-        pass
+        if "reportPath" not in self.config:
+            self.config["reportPath"] = f"{HOME_PATH}/.systemStatus"
+        if "refreshRateFast" not in self.config:
+            self.config["refreshRateFast"] = 10
+        if "refreshRateSlow" not in self.config:
+            self.config["refreshRateSlow"] = 1000
 
     def refresh_rate_fast(self) -> int:
         return int(self.config["refreshRateFast"])
 
+    def refresh_rate_slow(self) -> int:
+        return int(self.config["refreshRateSlow"])
+
     def report_path(self) -> str:
         return self.config["reportPath"]
+
+    def update_config(self, path: str = CONFIG_PATH) -> None:
+        self._init(path=path)
+
+    def set_config(self, newConfig: dict) -> None:
+        for key in newConfig:
+            self.config[key] = newConfig[key]
+
+    def read_warnings(self) -> list[dict[str, object]]:
+        readWarnings = self.warnings
+        self.warnings = []
+        return readWarnings
+
+    def save_config(self, path: str = CONFIG_PATH) -> None:
+        FP = open(path, "w")
+        yaml.dump(self.config, FP)
+        FP.close()
