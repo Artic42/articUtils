@@ -1,5 +1,6 @@
 import yaml
 import os
+import logging
 from articlib import articFileUtils as FU
 
 # Calculates home path
@@ -8,34 +9,47 @@ HOME_PATH = os.path.expanduser("~")
 # Constants
 CONFIG_PATH = f"{HOME_PATH}/.config/articutils/fileRemote.yaml"
 
+# Default values
+DEFAULT_REFRESH_RATE = 1000
+DEFAULT_MONITOR_PATH = f"{HOME_PATH}/.fileRemote"
+
+log = logging.getLogger()
+
 
 class Config:
     _instance = None
 
     def __new__(cls, path: str = CONFIG_PATH):
         if cls._instance is None:
+            log.info("Create new config for the first time")
             cls._instance = super().__new__(cls)
         cls._instance._init(path=path)
         return cls._instance
 
     def _init(self, path: str = CONFIG_PATH) -> None:
         self.warnings = []
+        log.info("Initialize config")
         if FU.fileExists(path):
+            log.info(f"Config file: {CONFIG_PATH}")
             FP = open(path, "r")
             self.config = yaml.safe_load(FP)
         else:
+            log.warning(f"File path {CONFIG_PATH} doesn't exist, loading default config")
             self.config = {}
             self.warnings.append(
                 {"code": 1, "msg": "Init not ok due to no config file"}
             )
         self._set_defaults()
+        log.info(f"Create monitoring path, {self.monitoring_path()}")
         FU.createDirectory(self.monitoring_path())
 
     def _set_defaults(self):
         if "refreshRate" not in self.config:
-            self.config["refreshRate"] = 1000
+            log.info(f"Set refresh rate to {DEFAULT_REFRESH_RATE}")
+            self.config["refreshRate"] = DEFAULT_REFRESH_RATE
         if "monPath" not in self.config:
-            self.config["monPath"] = f"{HOME_PATH}/.fileRemote"
+            log.info(f"Set mointoring path to {DEFAULT_MONITOR_PATH}")
+            self.config["monPath"] = DEFAULT_MONITOR_PATH
 
     def refresh_rate(self) -> int:
         return int(self.config["refreshRate"])
@@ -44,10 +58,12 @@ class Config:
         return self.config["monPath"]
 
     def update_config(self, path: str = CONFIG_PATH) -> None:
+        log.info(f"Update config with path {path}")
         self._init(path=path)
 
     def set_config(self, newConfig: dict) -> None:
         for key in newConfig:
+            log.info(f"Update {key} with {newConfig[key]}")
             self.config[key] = newConfig[key]
 
     def read_warnings(self) -> list[dict[str, object]]:
