@@ -3,7 +3,7 @@ import threading
 
 from articlib.articFileUtils import fileExists
 from articlib.articFileUtils import deleteFile
-from articutils.fileStatus import config
+from articutils.systemStatus import config
 
 
 conf = config.Config()
@@ -16,19 +16,19 @@ def loop():
     fastTask.start()
     fastTask.join()
     slowTask.join()
-    deleteFile(conf.monitoring_path() + "/KILL")
+    deleteFile(conf.report_path() + "/KILL")
 
 
 def reportFastTask():
     while not fileExists(conf.report_path() + "/KILL"):
         reportFast()
-        time.sleep(conf.refresh_rate() / 1000)
+        time.sleep(conf.refresh_rate_fast() / 1000)
 
 
 def reportSlowTask():
     while not fileExists(conf.report_path() + "/KILL"):
         reportSlow()
-        time.sleep(conf.refresh_rate() / 1000)
+        time.sleep(conf.refresh_rate_slow() / 1000)
 
 
 def reportFast():
