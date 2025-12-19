@@ -44,6 +44,16 @@ List of commands builtin docker module
 
 This application will save a series of status variables on a yaml file to be read by other software. There will be a option to point to a MongoDB database where the info will be stored. Two refresh rate can be configured for slow and fast data.
 
+#### config
+
+Configuration is set on $HOME/.config/articUtils/systemStatus.yaml file.
+
+| Parameter | Description | Default |
+| --- | --- | --- |
+| refreshRateFast | Time between checkups of the file in miliseconds | 10 |
+| refreshRateSlow | Time between checkups of the file in miliseconds | 1000 |
+| reportPath | Path where the command files will appear | $HOME/.fileRemote |
+
 ### Slow data 
 - System docker images
 - Running containers and status

@@ -38,7 +38,7 @@ def upContainer():
 
 def downContainer():
     log.info("Get up container into system")
-    logFile(UP_FILE_PATH)
+    logFile(DOWN_FILE_PATH)
     os.system(f"docker-compose down -d -f {DOWN_FILE_PATH}")
 
 
