@@ -45,11 +45,18 @@ class Config:
 
     def _set_defaults(self):
         if "refreshRate" not in self.config:
+            log.warning("No refresh rate set, it will set to default")
             log.info(f"Set refresh rate to {DEFAULT_REFRESH_RATE}")
             self.config["refreshRate"] = DEFAULT_REFRESH_RATE
         if "monPath" not in self.config:
+            log.warning("No monitoring path set, it will set to default")
             log.info(f"Set mointoring path to {DEFAULT_MONITOR_PATH}")
             self.config["monPath"] = DEFAULT_MONITOR_PATH
+
+    def log(self):
+        log.info("This is the config of the system")
+        log.info(f"    refreshRate: {self.refresh_rate()}")
+        log.info(f"    monPath: {self.monitoring_path()}")
 
     def refresh_rate(self) -> int:
         return int(self.config["refreshRate"])
@@ -72,6 +79,9 @@ class Config:
         return readWarnings
 
     def save_config(self, path: str = CONFIG_PATH) -> None:
+        log.info("Save current to config to config file")
+        log.info(f"Path to file: {path}")
+        self.log()
         FP = open(path, "w")
         yaml.dump(self.config, FP)
         FP.close()
