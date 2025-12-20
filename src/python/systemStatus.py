@@ -22,13 +22,13 @@ def loop():
 def reportFastTask():
     while not fileExists(conf.report_path() + "/KILL"):
         reportFast()
-        time.sleep(conf.refresh_rate_fast() / 1000)
+        time.sleep(conf.refresh_rate_fast())
 
 
 def reportSlowTask():
     while not fileExists(conf.report_path() + "/KILL"):
         reportSlow()
-        time.sleep(conf.refresh_rate_slow() / 1000)
+        time.sleep(conf.refresh_rate_slow())
 
 
 def reportFast():
