@@ -53,13 +53,19 @@ Configuration is set on $HOME/.config/articUtils/systemStatus.yaml file.
 | refreshRateFast | Time between checkups of the file in miliseconds | 10 |
 | refreshRateSlow | Time between checkups of the file in miliseconds | 1000 |
 | reportPath | Path where the command files will appear | $HOME/.fileRemote |
+| alertsEnable | Enable the alert system using ntfy | False |
+| ntfyServer | Path to the ntfy server for the alerts | NoServer |
 
-### Slow data 
+#### Slow data 
 - System docker images
 - Running containers and status
+- Disk drive usage
 
 #### Fast data
 - RAM usages
 - CPU usage
 - Temperature
 
+#### Alert system
+This module will allow to create HH, HL, LH, and LL limits for any value on the data. And send a ntfy notification if needed.
+Also it creates alert if containers stop for some reason.
