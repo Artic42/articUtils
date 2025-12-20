@@ -50,8 +50,8 @@ Configuration is set on $HOME/.config/articUtils/systemStatus.yaml file.
 
 | Parameter | Description | Default |
 | --- | --- | --- |
-| refreshRateFast | Time between checkups of the file in miliseconds | 10 |
-| refreshRateSlow | Time between checkups of the file in miliseconds | 1000 |
+| refreshRateFast | Time between checkups of the file in seconds | 1 |
+| refreshRateSlow | Time between checkups of the file in seconds | 60 |
 | reportPath | Path where the command files will appear | $HOME/.fileRemote |
 | alertsEnable | Enable the alert system using ntfy | False |
 | ntfyServer | Path to the ntfy server for the alerts | NoServer |
