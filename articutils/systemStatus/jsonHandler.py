@@ -16,12 +16,13 @@ class JsonFile:
     def __init__(self, path: str, size: int = 1024) -> None:
         self.clock = datetime.now()
         self.content = {}
+        self._setHostname()
         self.size = size
         self.path = path
+
         self.filePtr = open(path, "wb")
-        if fileExists(path) is False:
-            self.filePtr.write(b"\x00" * size)
-            self.filePtr.close()
+        self.filePtr.write(b"\x00" * size)
+        self.filePtr.close()
         self.filePtr = open(path, "r+b")
         self.fmap = mmap.mmap(self.filePtr.fileno(), size)
 
@@ -38,7 +39,7 @@ class JsonFile:
         self.content["minute"] = int(self.clock.minute)
         self.content["second"] = int(self.clock.second)
 
-    def writeData(self, data: dict) -> None:
+    def writeData(self, data: dict) -> int:
         self.clock = datetime.now()
         self._setDate()
         self._setTime()
@@ -48,7 +49,8 @@ class JsonFile:
         file_bytes = json.dumps(self.content).encode()
 
         if len(file_bytes) > self.size:
-            log.error("File too big expected too much data")
+            log.error("File too small, too much data to dump")
+            return 1
 
         # Clear memory map
         self.fmap.seek(0)
@@ -57,3 +59,5 @@ class JsonFile:
         # Write data
         self.fmap.seek(0)
         self.fmap.write(file_bytes)
+
+        return 0
