@@ -46,7 +46,7 @@ class JsonFile:
         self.content["data"] = data
 
         # Convert dict into bytes
-        file_bytes = json.dumps(self.content).encode()
+        file_bytes = json.dumps(self.content, indent=4).encode()
 
         if len(file_bytes) > self.size:
             log.error("File too small, too much data to dump")
