@@ -9,10 +9,3 @@ def logTest(request):
     logUtils.logTestStart(request.node.name)
     yield
     logUtils.logTestEnd()
-
-
-@pytest.fixture
-def makeTempFolder():
-    if FU.directoryExists("temp") is False:
-        FU.createDirectory("temp")
-    yield 1
