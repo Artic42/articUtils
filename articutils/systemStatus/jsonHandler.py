@@ -21,10 +21,14 @@ class JsonFile:
         self.write = write
 
         if read is False and write is False:
-            raise ValueError("No mode selected at class creation")
+            msg = "No mode selected at class creation"
+            log.error(msg)
+            raise ValueError(msg)
 
         if read is True and write is True:
-            raise ValueError("Both mode selected at class creation, only one allowed")
+            msg = "Both mode selected at class creation, only one allowed"
+            log.error(msg)
+            raise ValueError(msg)
 
         if type == "":
             self._setType(path)
@@ -34,13 +38,27 @@ class JsonFile:
         self.size = size
         self.path = path
 
-        if read is False:
+        if write is True:
             self.filePtr = open(path, "wb")
             self.filePtr.write(b"\x00" * size)
             self.filePtr.close()
 
+        if read is True:
+            self.filePtr = open(path, "r+b")
+            self.filePtr.seek(size-1)
+            self.filePtr.write(b"\x00")
+            self.filePtr.close()
+
         self.filePtr = open(path, "r+b")
         self.fmap = mmap.mmap(self.filePtr.fileno(), size)
+
+    def __del__(self) -> None:
+        if hasattr(self, "fmap"):
+            self.fmap.close()
+        if self.read is True:
+            return
+        if self.write is True:
+            self.bufferedWrite()
 
     def _setHostname(self) -> None:
         self.content["Hostname"] = socket.gethostname()
@@ -57,6 +75,11 @@ class JsonFile:
         self.content["hour"] = int(self.clock.hour)
         self.content["minute"] = int(self.clock.minute)
         self.content["second"] = int(self.clock.second)
+
+    def bufferedWrite(self) -> None:
+        FilePtr = open(self.path, "w")
+        json.dump(self.content, FilePtr, indent=4)
+        FilePtr.close()
 
     def writeData(self, data: dict) -> int:
         if self.write is False:
