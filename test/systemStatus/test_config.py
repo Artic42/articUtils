@@ -10,7 +10,7 @@ TEST_CONFIG_PATH = "test/files/systemStatusConfig.yaml"
 
 
 def test_config_default_creation():
-    testConfig = config.Config("BadPath")
+    testConfig = config.SystemStatusConfig("BadPath")
     testConfig.update_config()
     assert testConfig.refresh_rate_fast() == 10
     assert testConfig.refresh_rate_slow() == 1000
@@ -18,7 +18,7 @@ def test_config_default_creation():
 
 
 def test_set_config_value():
-    testConfig = config.Config("BadPath")
+    testConfig = config.SystemStatusConfig("BadPath")
     testConfig.update_config()
     testConfig.set_config({"refreshRateFast": 100})
     assert testConfig.refresh_rate_fast() == 100
@@ -27,7 +27,7 @@ def test_set_config_value():
 
 
 def test_read_config_from_file():
-    testConfig = config.Config(path=TEST_CONFIG_PATH)
+    testConfig = config.SystemStatusConfig(path=TEST_CONFIG_PATH)
     testConfig.update_config(path=TEST_CONFIG_PATH)
     assert testConfig.refresh_rate_fast() == 5
     assert testConfig.refresh_rate_slow() == 900
@@ -35,7 +35,7 @@ def test_read_config_from_file():
 
 
 def test_update_config():
-    testConfig = config.Config("BadPath")
+    testConfig = config.SystemStatusConfig("BadPath")
     testConfig.update_config()
     assert testConfig.refresh_rate_fast() == 10
     assert testConfig.refresh_rate_slow() == 1000
@@ -47,15 +47,15 @@ def test_update_config():
 
 
 def test_singleton_behaviour():
-    testConfig = config.Config("BadPath")
+    testConfig = config.SystemStatusConfig("BadPath")
     testConfig.update_config()
-    testConfig2 = config.Config()
+    testConfig2 = config.SystemStatusConfig()
     testConfig.set_config({"refreshRateFast": 100})
     assert testConfig2.refresh_rate_fast() == 100
 
 
 def test_warning_if_no_config():
-    testConfig = config.Config("BadPath")
+    testConfig = config.SystemStatusConfig("BadPath")
     warnings = testConfig.read_warnings()
     assert {
         "code": 1,
@@ -66,5 +66,5 @@ def test_warning_if_no_config():
 def test_creation_of_folder():
     if os.path.isdir(FILE_MON_PATH):
         FU.deleteDirectory(FILE_MON_PATH)
-    config.Config(path=TEST_CONFIG_PATH)
+    config.SystemStatusConfig(path=TEST_CONFIG_PATH)
     assert os.path.isdir(FILE_MON_PATH)

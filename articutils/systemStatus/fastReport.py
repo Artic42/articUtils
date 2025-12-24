@@ -1,20 +1,38 @@
+import psutil
+
 from articutils.systemStatus import config
+from articlib import jsonHandler
 
 
-conf = config.Config()
+class Fast:
+    def __init__(self):
+        self.config = config.SystemStatusConfig()
+        reportPath = self.config.report_path() + "fastReport.json"
+        self.jsonFile = jsonHandler.JsonFile(reportPath,
+                                             type="fastReport",
+                                             write=True)
+        psutil.cpu_percent()
 
+    def _cpu(self):
+        usage: list[float] = psutil.cpu_percent(percpu=True)
+        cpu = {}
+        for core in range(len(usage)):
+            cpu["cpu" + str(core)] = usage[core]
+        return cpu
 
-def report():
-    pass
+    def _ram(self):
+        mem = psutil.virtual_memory()
+        ram = {}
+        ram["total"] = round(mem.total / (1024**3), 2)
+        ram["used"] = round(mem.used / (1024**3), 2)
+        ram["percent"] = mem.percent
+        return ram
 
+    def _temperature(self):
+        psutil.sensors_temperatures()
+        return {}
 
-def cpu():
-    pass
-
-
-def ram():
-    pass
-
-
-def temp():
-    pass
+    def report(self):
+        data: dict = {}
+        data["cpu"] = self._cpu()
+        data["ram"] = self._ram()

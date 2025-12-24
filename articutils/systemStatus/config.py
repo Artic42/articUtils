@@ -9,7 +9,7 @@ HOME_PATH = os.path.expanduser("~")
 CONFIG_PATH = f"{HOME_PATH}/.config/articutils/fileRemote.yaml"
 
 
-class Config:
+class SystemStatusConfig:
     _instance = None
 
     def __new__(cls, path: str = CONFIG_PATH):
