@@ -29,10 +29,15 @@ class Fast:
         return ram
 
     def _temperature(self):
-        psutil.sensors_temperatures()
-        return {}
+        temps = psutil.sensors_temperatures()
+        temperature = {}
+        if "cpu_thermal" in temps:
+            temperature["core"] = temps["cpu_thermal"][0].current
+        return temperature
 
     def report(self):
         data: dict = {}
         data["cpu"] = self._cpu()
         data["ram"] = self._ram()
+        data["temperature"] = self._temperature()
+        self.jsonFile.writeData(data)
