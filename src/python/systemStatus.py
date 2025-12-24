@@ -3,10 +3,10 @@ import threading
 
 from articlib.articFileUtils import fileExists
 from articlib.articFileUtils import deleteFile
-from articutils.systemStatus import config
+import articutils.systemStatus.config as config
 
 
-conf = config.Config()
+conf = config.SystemStatusConfig()
 
 
 def loop():

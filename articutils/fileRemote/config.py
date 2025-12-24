@@ -1,7 +1,7 @@
 import yaml
 import os
 import logging
-from articlib import articFileUtils as FU
+import articlib.articFileUtils as FU
 
 # Calculates home path
 HOME_PATH = os.path.expanduser("~")
