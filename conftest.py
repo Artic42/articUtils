@@ -1,7 +1,6 @@
 import pytest
 
 from articlib import logUtils
-from articlib import articFileUtils as FU
 
 
 @pytest.fixture(autouse=True)
