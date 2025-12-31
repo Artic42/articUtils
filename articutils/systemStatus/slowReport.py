@@ -26,12 +26,16 @@ class SlowReport:
         containers: dict[str, Any] = {}
         rawData = self.dockerClient.containers.list()
         for entry in rawData:
+            if entry.name == None:
+                name: str = entry.attrs["Config"]["Image"]
+            else:
+                name: str = entry.name
             image = entry.attrs["Config"]["Image"]
             status = entry.attrs["State"]["Status"]
             ports = entry.attrs["NetworkSettings"]["Ports"]
-            containers[entry.name]["image"] = image
-            containers[entry.name]["status"] = status
-            containers[entry.name]["ports"] = ports
+            containers[name]["image"] = image
+            containers[name]["status"] = status
+            containers[name]["ports"] = ports
         return containers
 
     def _diskUsage(self) -> list[dict[str, Any]]:
