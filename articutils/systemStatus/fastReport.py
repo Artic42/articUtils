@@ -1,14 +1,19 @@
 import psutil
+import logging
 from typing import Any
 
 from articutils.systemStatus import config
 from articlib import jsonHandler
 
 
+log = logging.getLogger()
+conf = config.SystemStatusConfig()
+
+
 class Fast:
     def __init__(self):
-        self.config = config.SystemStatusConfig()
-        reportPath = self.config.report_path() + "fastReport.json"
+        reportPath = conf.report_path() + "/fastReport.json"
+        log.info(f"Creating fast report on the following {reportPath}")
         self.jsonFile = jsonHandler.JsonFile(reportPath,
                                              type="fastReport",
                                              write=True)
